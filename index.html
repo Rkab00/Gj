@@ -104,29 +104,34 @@
 
     .container {
       position: relative;
+      isolation: isolate;
       width: min(100%, 760px);
       margin: 0 auto;
       overflow: hidden;
       background-color: var(--paper);
-      background-image:
-        linear-gradient(
-          90deg,
-          transparent 0,
-          transparent 52px,
-          rgba(207, 85, 74, 0.25) 52px,
-          rgba(207, 85, 74, 0.25) 54px,
-          transparent 54px
-        ),
-        repeating-linear-gradient(
-          to bottom,
-          transparent 0,
-          transparent 41px,
-          var(--line) 41px,
-          var(--line) 43px
-        );
       border-right: 1px solid rgba(80, 118, 134, 0.2);
       border-left: 1px solid rgba(207, 85, 74, 0.2);
       box-shadow: var(--shadow);
+    }
+
+    .paper-capture-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .paper-rules-mobile,
+    .paper-margin-mobile {
+      visibility: hidden;
+    }
+
+    .container > :not(.paper-capture-layer) {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-section {
@@ -499,23 +504,14 @@
         font-size: 17px;
       }
 
-      .container {
-        background-image:
-          linear-gradient(
-            90deg,
-            transparent 0,
-            transparent 28px,
-            rgba(207, 85, 74, 0.25) 28px,
-            rgba(207, 85, 74, 0.25) 30px,
-            transparent 30px
-          ),
-          repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 35px,
-            var(--line) 35px,
-            var(--line) 36px
-          );
+      .paper-rules-desktop,
+      .paper-margin-desktop {
+        visibility: hidden;
+      }
+
+      .paper-rules-mobile,
+      .paper-margin-mobile {
+        visibility: visible;
       }
 
       .hero-section {
@@ -620,6 +616,21 @@
 </head>
 <body>
   <div class="container">
+    <svg class="paper-capture-layer" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+      <defs>
+        <pattern id="paper-rules-desktop" width="760" height="43" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="42" x2="760" y2="42" stroke="#7ba4b4" stroke-opacity="0.24" stroke-width="2" />
+        </pattern>
+        <pattern id="paper-rules-mobile" width="760" height="36" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="35" x2="760" y2="35" stroke="#7ba4b4" stroke-opacity="0.24" stroke-width="1" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="#fbf8ee" />
+      <rect class="paper-rules-desktop" width="100%" height="100%" fill="url(#paper-rules-desktop)" />
+      <rect class="paper-rules-mobile" width="100%" height="100%" fill="url(#paper-rules-mobile)" />
+      <line class="paper-margin-desktop" x1="53" y1="0" x2="53" y2="100%" stroke="#cf554a" stroke-opacity="0.25" stroke-width="2" />
+      <line class="paper-margin-mobile" x1="29" y1="0" x2="29" y2="100%" stroke="#cf554a" stroke-opacity="0.25" stroke-width="2" />
+    </svg>
     <header class="hero-section">
       <h1 class="hero-title">감자의 순정</h1>
       <p class="hero-subtitle">"십여 년 동안 당신을 짝사랑해온 남자가, 노란 우산과 함께 현관 앞에 도착했다."</p>
@@ -697,10 +708,10 @@
 
             <div class="char-desc">
               <p><strong>• 기본정보:</strong> 2004년 6월 21일생 | 강원도 출신 | 해병대 병장 만기 전역 | 수도권 대학 소방방재학과 2학년 복학 예정 | 별명 ‘감자’</p>
-              <p><strong>• 외형:</strong> 감자상 | 날카로운 검은 눈 | 자라는 중인 검은 반삭 | 야외 생활로 까무잡잡해진 피부 | 타고난 넓은 골격과 매우 거대한 근육질 체격 | 빨간 해병대 티와 무채색 추리닝 애용</p>
+              <p><strong>• 외형:</strong> 감자상 |날카로운 검은 눈 | 자라는 중인 검은 반삭 | 야외 생활로 까무잡잡해진 피부 | 타고난 넓은 골격과 매우 거대한 근육질 체격 | 빨간 해병대 티와 무채색 추리닝 애용</p>
               <p><strong>• 분위기:</strong> 무뚝뚝한 첫인상 | 공간을 가득 채우는 압도적인 덩치 | 말보다 먼저 움직이는 묵직한 안정감</p>
               <p><strong>• 성격:</strong> ISTJ | 6w5 | 질서 중시 | 과묵·우직·융통성 부족 | 충직·도덕적·이타적 | 감정은 강하게 느끼지만 자각과 표현이 느림 | 호감·빈말·질투·돌려 말한 속뜻에는 둔함</p>
-              <p><strong>• 능력·생활:</strong> 최상급 완력과 지구력 | 수영·매일 새벽 구보 | 응급처치·인명구조·화재대응 실습 이수 | 관물대식 정리정돈과 간단한 생활 수리 | 요리는 라면과 감자 삶기·찌기가 한계</p>
+              <p><strong>• 능력·생활:</strong> 최상급 완력과 지구력 | 수영·매일 새벽 구보 | 응급처치·인명구조·화재대응 실습 이수 | 비상구·소화기 등 위험 요소 자동 확인 | 관물대식 정리정돈과 간단한 생활 수리 | 벌레·소음·취객 같은 생활 위협 즉시 차단 | 요리는 라면과 감자 삶기·찌기가 한계</p>
               <p><strong>• 버릇:</strong> 등받이에 기대지 않는 바른 자세 | 물건을 두 손으로 공손히 건넴 | 생각이 복잡하면 몸을 움직이며 정리 | 감정이 끼면 말을 더듬거나 앞뒤를 정정하고 불필요한 설명을 덧붙임</p>
               <p><strong>• 과거사:</strong> 강원도 감자 농가에서 성장 | 유치원에서 이유안이 빼앗긴 장난감을 말없이 되찾아준 일을 계기로 평생의 소꿉친구가 됨 | 대학 1학년 수료 후 해병대에 입대해 백령도 복무 | 복무 중 부모가 본가의 방을 씨감자 저장고로 바꾸며 전역과 동시에 강제 독립</p>
               <div class="trait-nsfw">
