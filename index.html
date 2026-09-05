@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <meta name="description" content="감자의 순정 캐릭터챗 세계관·장소·캐릭터·프롤로그 소개">
   <title>감자의 순정</title>
   <style>
@@ -39,6 +41,7 @@
     }
 
     :root {
+      color-scheme: only light;
       --desk: #d8d0c1;
       --paper: #fbf8ee;
       --note: #fffdf7;
@@ -70,10 +73,15 @@
     }
 
     html {
+      min-height: 100%;
+      background-color: var(--desk);
       -webkit-text-size-adjust: 100%;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     body {
+      min-height: 100vh;
       min-width: 320px;
       color: var(--body);
       background: var(--desk);
@@ -85,6 +93,8 @@
       overflow-wrap: break-word;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     img {
@@ -582,13 +592,26 @@
     }
 
     @media print {
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html,
       body {
-        background: #fff;
+        background-color: var(--desk) !important;
+      }
+
+      body {
+        background: var(--desk) !important;
       }
 
       .container {
         width: 100%;
         max-width: none;
+        background-color: var(--paper) !important;
         border: 0;
         box-shadow: none;
       }
